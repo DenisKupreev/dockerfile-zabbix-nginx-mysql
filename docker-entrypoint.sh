@@ -13,7 +13,7 @@ if [[ ! "$MYSQL_HOST" ]];then
 fi
 if [[ ! "$MYSQL_PASSWORD" ]];then
     echo "MYSQL_PASSWORD is not defined use: 'password'"
-    MYSQL_PASSWORD=zabbix
+    MYSQL_PASSWORD=password
 fi
 if [[ ! "$MYSQL_DATABASE" ]];then
     echo "MYSQL_DATABASE is not defined use: 'zabbix'"
