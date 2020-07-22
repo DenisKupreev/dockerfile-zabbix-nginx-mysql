@@ -52,7 +52,7 @@ if [ ! -f "/run/mysqld/.init" ]; then
         echo >&2 'MySQL: init process failed.'
         exit 1
     fi
-    rm -rf ~/.mysql_history ~/.ash_history #$SQL
+    rm -rf ~/.mysql_history ~/.ash_history $SQL
 # Check first start was
     touch /run/mysqld/.init
     echo "MySQL: setup finish ..."
@@ -68,7 +68,7 @@ sed -i -e "s/DBHost.*$/DBHost=$MYSQL_HOST/" $ZABBIX_SERVER_CONF
 sed -i -e "s/DBName.*$/DBName=$MYSQL_DATABASE/" $ZABBIX_SERVER_CONF
 sed -i -e "s/DBUser.*$/DBUser=$MYSQL_USER/" $ZABBIX_SERVER_CONF
 sed -i -e "s/^#.*DBPassword.*$/DBPassword=$MYSQL_PASSWORD/" $ZABBIX_SERVER_CONF
-# Setup Zabbix WEB conig
+# Setup Zabbix WEB config
 cp /usr/share/zabbix/conf/zabbix.conf.php.example $ZABBIX_WEB_CONF
 sed -i -e "s/\$DB\['SERVER'\].*$/\$DB['SERVER']\t= '$MYSQL_HOST';/" $ZABBIX_WEB_CONF
 sed -i -e "s/\$DB\['DATABASE'\].*$/\$DB['DATABASE']\t = '$MYSQL_DATABASE';/" $ZABBIX_WEB_CONF
