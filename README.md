@@ -9,6 +9,10 @@ Run container:
 ```bash
 docker run -e MYSQL_DATABASE=zabbix_db -e MYSQL_USER=zabbix_user -e MYSQL_PASSWORD=password -p 8080:80 -it idkaktys/dockerfile-zabbix-nginx-mysql
 ```
+With volume for store MySQL data:
+```bash
+docker run -v /YOUR_PATH/:/var/lib/mysql -e MYSQL_DATABASE=zabbix_db -e MYSQL_USER=zabbix_user -e MYSQL_PASSWORD=password -p 8080:80 -it idkaktys/dockerfile-zabbix-nginx-mysql
+```
 or clone [GitHub repository](https://github.com/DenisKupreev/dockerfile-zabbix-nginx-mysql) ,  go to the directory, build image:
 ```bash
 git clone https://github.com/DenisKupreev/dockerfile-zabbix-nginx-mysql.git

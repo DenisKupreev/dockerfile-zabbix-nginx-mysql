@@ -22,14 +22,14 @@ fi
 # Init mysql
 echo "MySQL: setup starting ..."
 # Cheack first start
-if [ ! -f "/run/mysqld/.init" ]; then
+if [ ! -f "/var/lib/mysql/.init" ]; then
 # Create temp file
     SQL=$(mktemp)
 # Cheack mount external volume
     if [ ! -d "/var/lib/mysql/mysql" ]; then
         echo "MySQL: install base db"
         chown -R mysql:mysql  /var/lib/mysql
-        mysql_install_db --user=mysql --datadir=/var/lib/mysql
+        mysqld --initialize-insecure --lower-case-table-names=0
     fi
 # Build MySQL setups
     echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE CHARACTER SET utf8 COLLATE utf8_bin;" >> $SQL
@@ -38,7 +38,8 @@ if [ ! -f "/run/mysqld/.init" ]; then
     echo "FLUSH PRIVILEGES;" >> $SQL
     mysqld --skip-networking &
     pid="$!"
-    for i in {30..0}; do
+    mysql=( mysql --protocol=socket -uroot )
+    for i in {10..0}; do
         if echo 'SELECT 1' | "mysql" &> /dev/null; then
             break
         fi
@@ -52,9 +53,9 @@ if [ ! -f "/run/mysqld/.init" ]; then
         echo >&2 'MySQL: init process failed.'
         exit 1
     fi
-    rm -rf ~/.mysql_history ~/.ash_history $SQL
+    rm -rf ~/.mysql_history ~/.ash_history  $SQL
 # Check first start was
-    touch /run/mysqld/.init
+    touch /var/lib/mysql/.init
     echo "MySQL: setup finish ..."
 fi
 echo "php-FPM setup ..."

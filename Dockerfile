@@ -20,9 +20,9 @@ RUN wget $ZABBIX_REPO/zabbix-release/$ZABBIX_RELEASE && \
 RUN apt install -y mysql-server nginx supervisor
 
 # Create dirs for services
-RUN mkdir -p /run/nginx /var/tmp/nginx/client_body /run/php /run/mysqld /var/run/zabbix && \
+RUN mkdir -p /run/nginx /var/tmp/nginx/client_body /run/php /run/mysqld /var/run/mysqld /var/run/zabbix && \
     chown www-data:www-data -R /run/nginx /var/tmp/nginx/ /run/php && \
-    chown -R mysql:mysql /run/mysqld && \
+    chown -R mysql:mysql /run/mysqld  /var/run/mysqld && \
     chown -R zabbix:zabbix  /var/run/zabbix 
 
 # Get zabbix db dump (I don't know why it not added when installing the package)
